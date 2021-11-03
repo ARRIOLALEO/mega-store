@@ -5,10 +5,14 @@ class ProductsService {
     this.mongoDB = new MongoLib();
   }
 
-  async getProducts(coll) {
-    console.log(this.collection);
-    const products = await this.mongoDB.getAll(this.collection);
+  async getProducts(category) {
+    const products = await this.mongoDB.getAll(category);
     return products || [];
+  }
+
+  async getProduct(category, id) {
+    const product = await this.mongoDB.getOne(category, id);
+    return product || "not found";
   }
 }
 

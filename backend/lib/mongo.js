@@ -25,9 +25,18 @@ class MongoLib {
     return MongoLib.connection;
   }
 
-  getAll(collection) {
+  getAll(category) {
     return this.connect().then((db) => {
-      return db.collection(collection).find({}).toArray();
+      return db.collection(category).find({}).toArray();
+    });
+  }
+
+  getOne(category, id) {
+    return this.connect().then((db) => {
+      return db
+        .collection(category)
+        .find({ _id: ObjectId(id) })
+        .toArray();
     });
   }
 }
