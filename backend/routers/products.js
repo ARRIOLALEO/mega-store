@@ -1,5 +1,5 @@
 const express = require("express");
-const ProductsService = require("../../services/products/products");
+const ProductsService = require("../services/products");
 function productsAPI(app) {
   const router = express.Router();
   //get all the products
