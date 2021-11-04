@@ -5,9 +5,8 @@ function productsAPI(app) {
   //get all the products
   const productService = new ProductsService();
   router.get("/", async (req, res, next) => {
-    const { category } = req.query;
     try {
-      const products = await productService.getProducts(category);
+      const products = await productService.getProducts();
       res.status(200).json({
         data: products,
         message: "all products",
@@ -17,13 +16,53 @@ function productsAPI(app) {
     }
   });
 
-  router.get("/:category/:productId", async (req, res, next) => {
-    const { category, productId } = req.params;
+  router.get("/:productId", async (req, res, next) => {
+    const { productId } = req.params;
     try {
-      const product = await productService.getProduct(category, productId);
+      const product = await productService.getProduct(productId);
       res.status(200).json({
         data: product,
         message: "product retrived",
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  router.put("/", async (req, res, next) => {
+    const { body: data } = req;
+    try {
+      const createProductId = await productService.createProduct(data);
+      res.status(200).json({
+        data: createProductId,
+        message: "product added",
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  router.patch("/:productId", async (req, res, next) => {
+    const { productId } = req.params;
+    const { body: data } = req;
+    try {
+      const updateProductId = productService.updateProduct(productId, data);
+      res.status(200).json({
+        data: updateProductId,
+        message: "product has been added",
+      });
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  router.delete("/:productId", async (req, res, next) => {
+    const { productId } = req.params;
+    const deleteProductId = await productService.deleteProduct(productId);
+    try {
+      res.status(200).json({
+        data: deleteProductId,
+        mesage: "product deleted",
       });
     } catch (err) {
       next(err);

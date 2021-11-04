@@ -25,18 +25,45 @@ class MongoLib {
     return MongoLib.connection;
   }
 
-  getAll(category) {
+  getAll(collection) {
     return this.connect().then((db) => {
-      return db.collection(category).find({}).toArray();
+      return db.collection(collection).find({}).toArray();
     });
   }
 
-  getOne(category, id) {
+  getOne(collection, id) {
     return this.connect().then((db) => {
       return db
-        .collection(category)
+        .collection(collection)
         .find({ _id: ObjectId(id) })
         .toArray();
+    });
+  }
+
+  create(collection, data) {
+    return this.connect()
+      .then((db) => {
+        return db.collection(collection).insertOne(data);
+      })
+      .then((result) => result.insertedId);
+  }
+
+  update(collection, id, data) {
+    return this.connect()
+      .then((db) => {
+        return db
+          .collection(collection)
+          .updateOne({ _id: ObjectId(id) }, { $set: data }, { upsert: true });
+      })
+      .then((result) => result.upsertedId);
+  }
+
+  delete(collection, id) {
+    return this.connect().then((db) => {
+      return db
+        .collection(collection)
+        .deleteOne({ _id: ObjectId(id) })
+        .then((result) => id);
     });
   }
 }
