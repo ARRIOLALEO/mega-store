@@ -6,12 +6,15 @@ const { config } = require("./config/index");
 
 const productsAPI = require("./routers/products");
 const ordersAPI = require("./routers/orders");
+const clientsAPI = require("./routers/clients");
 //body parser
 app.use(express.json());
 
 //Routes
 ordersAPI(app);
 productsAPI(app);
+clientsAPI(app);
+
 app.listen(config.port, (err) => {
   if (err) {
     console.log("there is an error on loading the server");

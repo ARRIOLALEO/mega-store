@@ -55,7 +55,7 @@ class MongoLib {
           .collection(collection)
           .updateOne({ _id: ObjectId(id) }, { $set: data }, { upsert: true });
       })
-      .then((result) => result.upsertedId);
+      .then((result) => id);
   }
 
   delete(collection, id) {
