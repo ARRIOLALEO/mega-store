@@ -1,5 +1,9 @@
 const express = require("express");
 const ProductsService = require("../services/products");
+
+const { createProductSchema } = require("../utils/schemas/products");
+
+const validationHandler = require("../utils/middleware/validationHandler");
 function productsAPI(app) {
   const router = express.Router();
   //get all the products
@@ -29,7 +33,7 @@ function productsAPI(app) {
     }
   });
 
-  router.put("/", async (req, res, next) => {
+  router.put("/", validationHandler(createProductSchema), async (req, res, next) => {
     const { body: data } = req;
     try {
       const createProductId = await productService.createProduct(data);
