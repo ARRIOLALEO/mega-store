@@ -6,14 +6,16 @@ const { config } = require("./config/index");
 
 const productsAPI = require("./routers/products");
 const ordersAPI = require("./routers/orders");
-const clientsAPI = require("./routers/clients");
+const usersAPI = require("./routers/users")
+
 //body parser
 app.use(express.json());
 
 //Routes
 ordersAPI(app);
 productsAPI(app);
-clientsAPI(app);
+usersAPI(app)
+
 
 app.listen(config.port, (err) => {
   if (err) {
