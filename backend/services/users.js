@@ -16,6 +16,7 @@ class UsersServices {
     return user || "";
   }
   async createUser(data) {
+    data.password = await bcript.hash(data.password, 10);
     const createUser = await this.MongoDB.create(this.collection, data);
     return createUser || "nothing was create";
   }

@@ -1,9 +1,13 @@
 const express = require("express");
-
+const passport = require("passport");
 const { createUserSchema } = require("../utils/schemas/users");
 
 const validationHandler = require("../utils/middleware/validationHandler");
 const UsersServices = require("../services/users");
+
+// JWT strategy
+//
+require("../utils/auth/authjwt");
 
 function usersAPI(app) {
   const router = express.Router();

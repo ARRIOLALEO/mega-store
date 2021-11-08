@@ -17,7 +17,7 @@ const getUserSchema = {
 
 const updateUserSchema = {
   _id: userIdSchema.required(),
-  apikeyToken: joi.string.required(),
+  apikeyToken: joi.string().required(),
 };
 module.exports = {
   createUserSchema,

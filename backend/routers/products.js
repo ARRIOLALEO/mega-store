@@ -3,6 +3,7 @@ const ProductsService = require("../services/products");
 const { createProductSchema } = require("../utils/schemas/products");
 
 const validationHandler = require("../utils/middleware/validationHandler");
+
 function productsAPI(app) {
   const router = express.Router();
   //get all the products
