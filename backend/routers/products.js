@@ -4,15 +4,13 @@ const { createProductSchema } = require("../utils/schemas/products");
 
 const validationHandler = require("../utils/middleware/validationHandler");
 
-function productsAPI(app, client) {
+function productsAPI(app) {
   const router = express.Router();
   //get all the products
   const productService = new ProductsService();
   router.get("/", async (req, res, next) => {
     try {
       const products = await productService.getProducts();
-      client.setex(JSON.stringify(products), 3600, "products");
-      console.log(client.products);
       res.status(200).json({
         data: products,
         message: "all products",
