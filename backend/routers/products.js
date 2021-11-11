@@ -1,14 +1,20 @@
 const express = require("express");
 const ProductsService = require("../services/products");
+const cors = require("cors");
 const { createProductSchema } = require("../utils/schemas/products");
 
 const validationHandler = require("../utils/middleware/validationHandler");
 
 function productsAPI(app) {
+  const corsOptions = {
+    origin: "http://localhost:3000",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  };
+
   const router = express.Router();
   //get all the products
   const productService = new ProductsService();
-  router.get("/", async (req, res, next) => {
+  router.get("/", cors(corsOptions), async (req, res, next) => {
     try {
       const products = await productService.getProducts();
       res.status(200).json({
